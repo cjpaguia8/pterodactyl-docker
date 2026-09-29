@@ -81,6 +81,17 @@ services:
       - /run/wings:/run/wings        # per-server machine-id files
       - /etc/ssl/certs:/etc/ssl/certs:ro
 
+  # Optional: playit.gg tunnel so people outside the house can join even when
+  # the internet provider blocks port forwarding (CGNAT). Set up with
+  # ./setup-playit.sh, which adds the key and COMPOSE_PROFILES=playit to .env.
+  playit:
+    image: ghcr.io/playit-cloud/playit-agent:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      SECRET_KEY: ${PLAYIT_SECRET_KEY:-}
+    profiles: ["playit"]
+
 volumes:
   db:
   panel-var:

@@ -38,11 +38,24 @@ The panel address is the laptop's IP. If the router hands the laptop a different
 stops working. In the router's settings, give the laptop a **DHCP reservation** (also called a static
 lease) so its IP never changes.
 
-## Playing from outside the house
+## Playing from outside the house (playit.gg)
 
-Friends on the same Wi-Fi can connect straight away. For people outside the house, forward the game
-ports (25565-25575 by default) on the router to the laptop's IP. To manage the panel from outside
-too, also forward ports 80 and 8080, and preferably use a domain name. Ask the person who set this up.
+Friends on the same Wi-Fi can connect straight away using the laptop's IP.
+
+For people outside the house, use playit.gg. Many internet providers share one public IP between
+customers (CGNAT), so router port forwarding doesn't work. playit gets around that for free.
+
+    cd /opt/pterodactyl
+    sudo git pull
+    sudo bash setup-playit.sh
+
+The script tells you what to do on the playit.gg website. At the end you get an address like
+`something.joinmc.link` that friends type into Minecraft. It keeps working after reboots.
+
+| Task | Command |
+|---|---|
+| Check playit is connected | `sudo docker compose logs --tail 30 playit` |
+| Use a different playit key | `sudo bash setup-playit.sh` again |
 
 ## Where things live
 
