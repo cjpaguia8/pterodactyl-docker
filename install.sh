@@ -67,7 +67,7 @@ for i in $(seq 1 100); do
   sleep 3
 done
 
-artisan() { docker compose exec -T panel php artisan "$@"; }
+artisan() { docker compose exec -T panel php artisan "$@" </dev/null; }
 
 say "Creating admin account, location and node"
 artisan p:user:make --email="$ADMIN_EMAIL" --username="$ADMIN_USER" \
@@ -134,3 +134,6 @@ cat <<EOF
 
   Everything starts by itself when the laptop boots.
 EOF
+
+say "Setting up the NeoForge Minecraft server"
+bash ./add-neoforge-server.sh || echo "NeoForge setup didn't finish. Retry with: sudo bash add-neoforge-server.sh"

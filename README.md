@@ -1,10 +1,24 @@
-# Pterodactyl (Docker) for the Ubuntu laptop
+# Pterodactyl + NeoForge (Docker) for Ubuntu
+
+Pterodactyl Panel + Wings running entirely in Docker, set up with a NeoForge Minecraft server
+(1.21.1 by default). For a plain Pterodactyl setup without Minecraft, use
+[pterodactyl-base](https://github.com/cjpaguia8/pterodactyl-base).
+
+## Already installed from the old `pterodactyl-docker` repo?
+
+This repo used to be called `pterodactyl-docker`. Point the laptop at the new name, update, and add
+the NeoForge server:
+
+    cd /opt/pterodactyl
+    sudo git remote set-url origin https://github.com/cjpaguia8/pterodactyl-neoforge.git
+    sudo git pull
+    sudo bash add-neoforge-server.sh
 
 ## First-time setup
 
 1. Download this onto the laptop:
 
-       sudo git clone https://github.com/cjpaguia8/pterodactyl-docker.git /opt/pterodactyl
+       sudo git clone https://github.com/cjpaguia8/pterodactyl-neoforge.git /opt/pterodactyl
        cd /opt/pterodactyl
 
 2. If Pterodactyl was installed on the laptop before (the normal way, not Docker), remove it first:
@@ -16,10 +30,24 @@
 
        sudo bash install.sh
 
-   Press Enter to accept the defaults. At the end it prints the panel address and admin password,
-   and saves them in `admin-credentials.txt`.
+   Press Enter to accept the defaults. It prints the panel address and admin password (also saved in
+   `admin-credentials.txt`), then sets up the NeoForge server.
 
 Everything starts automatically when the laptop boots. There's nothing to run day to day.
+
+## NeoForge server
+
+`install.sh` creates one NeoForge server. It asks for a name, Minecraft version (default 1.21.1),
+memory and disk, and whether you accept the [Minecraft EULA](https://aka.ms/MinecraftEULA). If you
+accept, it installs and starts the server; otherwise the panel asks about the EULA when you press Start.
+
+- **Add mods:** in the panel open the server, go to **Files → mods**, upload the `.jar` files, then
+  restart. Mods must match the Minecraft and NeoForge version. Players need the same mods.
+- **Another NeoForge server:** `sudo bash add-neoforge-server.sh`. It takes the next free port
+  (25566, 25567, …).
+- **Change version:** in the panel, **Startup** tab → Minecraft Version, then **Settings → Reinstall**.
+  Back up the world first.
+- The NeoForge egg comes from [pelican-eggs](https://github.com/pelican-eggs/minecraft); see `eggs/README.md`.
 
 ## Handy commands (run inside this folder)
 
